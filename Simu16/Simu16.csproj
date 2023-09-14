@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ROMS\apps\src\" />
     <Folder Include="ROMS\bin\" />
+    <Folder Include="ROMS\os\" />
   </ItemGroup>
 
   <ItemGroup>
