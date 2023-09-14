@@ -15,12 +15,41 @@
   <ItemGroup>
     <Folder Include="ROMS\apps\src\" />
     <Folder Include="ROMS\bin\" />
-    <Folder Include="ROMS\os\" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Font.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\common.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\core\cmdline.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\core\exeload.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\hal\disk.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\hal\keyboard.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\hal\uart.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\hal\vga.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\kernel.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\util\debug.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ROMS\os\util\system.s">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="ROMS\src\bios.s">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

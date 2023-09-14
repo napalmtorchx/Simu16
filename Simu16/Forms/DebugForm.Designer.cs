@@ -94,7 +94,7 @@ namespace Simu16
             PanelHex = new Panel();
             TxtHex = new RichTextBox();
             BtnHexDump = new Button();
-            TimerUpdate = new System.Windows.Forms.Timer(components);
+            TimerUpdate = new Timer(components);
             PanelFlags = new Panel();
             LabelIE = new Label();
             LabelTagIE = new Label();
@@ -136,6 +136,7 @@ namespace Simu16
             LabelFreq = new Label();
             TxtFreq = new TextBox();
             BtnSetFreq = new Button();
+            LabelTPS = new Label();
             PanelRegisters.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)DivRegisters3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)DivRegisters2).BeginInit();
@@ -1324,12 +1325,24 @@ namespace Simu16
             BtnSetFreq.UseVisualStyleBackColor = true;
             BtnSetFreq.Click += BtnSetFreq_Click;
             // 
+            // LabelTPS
+            // 
+            LabelTPS.AutoSize = true;
+            LabelTPS.Font = new Font("Consolas", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            LabelTPS.ForeColor = Color.White;
+            LabelTPS.Location = new Point(564, 16);
+            LabelTPS.Name = "LabelTPS";
+            LabelTPS.Size = new Size(56, 18);
+            LabelTPS.TabIndex = 32;
+            LabelTPS.Text = "TPS: 0";
+            // 
             // DebugForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(32, 32, 32);
             ClientSize = new Size(814, 475);
+            Controls.Add(LabelTPS);
             Controls.Add(BtnSetFreq);
             Controls.Add(LabelFreq);
             Controls.Add(TxtFreq);
@@ -1405,7 +1418,7 @@ namespace Simu16
         private Panel PanelHex;
         private RichTextBox TxtHex;
         private Label LabelMemory;
-        private System.Windows.Forms.Timer TimerUpdate;
+        private Timer TimerUpdate;
         private Button BtnHexDump;
         private Panel PanelFlags;
         private Label LabelFlags;
@@ -1471,5 +1484,6 @@ namespace Simu16
         private PictureBox DivFlags3;
         private Label LabelIE;
         private Label LabelTagIE;
+        private Label LabelTPS;
     }
 }

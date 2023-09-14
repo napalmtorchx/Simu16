@@ -191,6 +191,8 @@ namespace Simu16
             UpdateRegisters();
             UpdateFlags();
             UpdatePorts();
+
+            LabelTPS.Text = "TPS: " + App.TPS;
         }
 
         private void BtnContinue_Click(object sender, EventArgs e)

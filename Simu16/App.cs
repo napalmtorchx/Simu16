@@ -13,14 +13,19 @@ namespace Simu16
         public static BusController? Bus;
         public static Thread?        Thread;
         public static bool           Started, Stepped;
+        public static long           TPS { get; private set; } = 0;
+        public static long           TotalTicks { get; private set; } = 0;
 
         public static DebugForm? DebugForm;
         public static TTYForm?   TTYForm;
 
+        private static long _ticks = 0, _tm;
+        private static double _secs;
+
         [STAThread]
         public static void Main()
         {
-            Tokenizer tokenizer = new Tokenizer("ROMS/src/", "ROMS/src/bios.s");
+            Tokenizer tokenizer = new Tokenizer("ROMS/os/", "ROMS/os/kernel.s");
             tokenizer.Process();
 
             Parser parser = new Parser(tokenizer.Tokens);
@@ -44,6 +49,8 @@ namespace Simu16
             DebugForm = new DebugForm();
 
             Application.Run(DebugForm);
+
+            _secs = GetSeconds();
         }
 
         private static void EmulationThread()
@@ -52,18 +59,27 @@ namespace Simu16
 
             while (true)
             {
-                if (Stepped) { Bus.CPU.Step(1); Stepped = false; continue; }
-                if (Started) { Bus.CPU.Step(1); }
-
-                if (Bus.Frequency > 0)
+                if (Stepped || Started) 
                 {
-                    float freq = 1000.0f / Bus.Frequency;
-                    if (freq > 1) { Thread.Sleep(1000 / Bus.Frequency); }
+                    double s = GetSeconds();
+                    if ((s - _secs >= 1000.0 / (double)Bus.Frequency / 1000.0) || Bus.Frequency == 0)
+                    {
+                        _secs = s;
+                        _ticks++;
+                        TotalTicks++;
+
+                        if (_tm != DateTime.Now.Second)
+                        {
+                            _tm = DateTime.Now.Second;
+                            TPS = _ticks;
+                            _ticks = 0;
+                        }
+
+                        Bus.CPU.Step(1);
+                        Bus.SDC.SaveClock();
+                        if (Stepped) { Stepped = false; }
+                    }
                 }
-
-                if (Bus.Frequency > 0) { Thread.Sleep(1000 / Bus.Frequency); }
-
-                Bus.SDC.SaveClock();
             }
         }
 
@@ -74,6 +90,12 @@ namespace Simu16
 
             TTYForm.Show();
             TTYForm.Location = new System.Drawing.Point(DebugForm.Left + DebugForm.Width + 8, DebugForm.Top);
+        }
+
+        public static double GetSeconds()
+        {
+            TimeSpan tt = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            return (double)tt.TotalSeconds;
         }
     }
 }
